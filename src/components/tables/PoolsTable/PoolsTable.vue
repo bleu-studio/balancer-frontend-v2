@@ -35,6 +35,7 @@ import TokensWhite from '@/assets/images/icons/tokens_white.svg';
 import TokensBlack from '@/assets/images/icons/tokens_black.svg';
 import { poolMetadata } from '@/lib/config/metadata';
 import PoolsTableExtraInfo from './PoolsTableExtraInfo.vue';
+import useMetadatasQuery from '@/composables/queries/useMetadatasQuery';
 
 /**
  * TYPES
@@ -94,6 +95,7 @@ const { trackGoal, Goals } = useFathom();
 const { darkMode } = useDarkMode();
 const { upToLargeBreakpoint, upToSmallBreakpoint } = useBreakpoints();
 const { networkSlug } = useNetwork();
+const test = useMetadatasQuery(props.data.map(pool => pool.id));
 
 const wideCompositionWidth = computed(() => {
   if (upToSmallBreakpoint.value) return 250;
@@ -317,7 +319,7 @@ function iconAddresses(pool: Pool) {
       <template #poolNameCell="pool">
         <div v-if="!isLoading" class="flex items-center py-4 px-6">
           <div v-if="poolMetadata(pool.id)?.name" class="pr-2 text-left">
-            {{ poolMetadata(pool.id)?.name }}
+            {{ test.data }}
           </div>
           <div v-else>
             <TokenPills
